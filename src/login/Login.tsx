@@ -1,14 +1,13 @@
-import { Button, Checkbox, Form, Input } from 'antd';
+import { useCallback } from 'react';
+import { Button, Checkbox, Form, Input, message } from 'antd';
+import { login } from '../interface/interfaces';
 import './login.css';
+import { useNavigate } from 'react-router-dom';
 
 interface LoginUser {
   username: string;
   password: string;
 }
-
-const onFinish = (values: LoginUser) => {
-  console.log(values);
-};
 
 const layout1 = {
   labelCol: { span: 4 },
@@ -21,6 +20,31 @@ const layout2 = {
 };
 
 export function Login() {
+  const navigate = useNavigate();
+  const onFinish = useCallback(
+    async (values: LoginUser) => {
+      const res = await login(values.username, values.password);
+
+      if (res.status === 201 || res.status === 200) {
+        const { code, message: msg, data } = res.data;
+        if (msg === 'success') {
+          message.success('登录成功');
+          localStorage.setItem('access_token', data.accessToken);
+          localStorage.setItem('refresh_token', data.refreshToken);
+          localStorage.setItem('user_info', JSON.stringify(data.userInfo));
+          setTimeout(() => {
+            navigate('/');
+          }, 1000);
+        } else {
+          message.error(data);
+        }
+      } else {
+        message.error('系统繁忙，请稍后再试');
+      }
+    },
+    [navigate]
+  );
+
   return (
     <div id="login-container">
       <h1>会议室预订系统</h1>
@@ -43,8 +67,8 @@ export function Login() {
 
         <Form.Item {...layout2}>
           <div className="links">
-            <a href="">创建账号</a>
-            <a href="">忘记密码</a>
+            <a href="/register">创建账号</a>
+            <a href="/update_password">忘记密码</a>
           </div>
         </Form.Item>
 

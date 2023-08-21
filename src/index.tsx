@@ -6,10 +6,10 @@ import {
   Link,
   Outlet,
 } from 'react-router-dom';
-import { Register } from './Register';
-import { Login } from './Login';
-import { UpdatePassword } from './UpdatePassword';
-import { ErrorPage } from './ErrorPage';
+import { Register } from './register/Register';
+import { Login } from './login/Login';
+import { UpdatePassword } from './update_password/UpdatePassword';
+import { ErrorPage } from './error/ErrorPage';
 
 const routes = [
   {

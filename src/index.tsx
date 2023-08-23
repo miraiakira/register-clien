@@ -3,19 +3,25 @@ import './index.css';
 import {
   RouterProvider,
   createBrowserRouter,
-  Link,
-  Outlet,
 } from 'react-router-dom';
 import { Register } from './register/Register';
 import { Login } from './login/Login';
 import { UpdatePassword } from './update_password/UpdatePassword';
 import { ErrorPage } from './error/ErrorPage';
+import { Index } from './page/index';
+import { UpdateInfo } from './update_info/UpdateInfo';
 
 const routes = [
   {
     path: '/',
-    element: <div>index</div>,
+    element: <Index></Index>,
     errorElement: <ErrorPage />,
+    children: [
+      {
+        path: 'update_info',
+        element: <UpdateInfo />,
+      },
+    ],
   },
   {
     path: 'login',

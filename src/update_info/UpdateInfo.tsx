@@ -8,6 +8,7 @@ import {
   updateInfo,
   updateUserInfoCaptcha,
 } from '../interface/interfaces';
+import { HeadPicUpload } from './HeadPicUpload';
 
 export interface UserInfo {
   headPic: string;
@@ -78,7 +79,7 @@ export function UpdateInfo() {
           name="headPic"
           rules={[{ required: true, message: '请输入头像!' }]}
         >
-          <Input />
+          <HeadPicUpload></HeadPicUpload>
         </Form.Item>
 
         <Form.Item
@@ -115,7 +116,7 @@ export function UpdateInfo() {
 
         <Form.Item {...layout1} label=" ">
           <Button className="btn" type="primary" htmlType="submit">
-            修改密码
+            修改
           </Button>
         </Form.Item>
       </Form>

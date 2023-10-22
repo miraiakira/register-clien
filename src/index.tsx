@@ -1,15 +1,15 @@
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import {
-  RouterProvider,
-  createBrowserRouter,
-} from 'react-router-dom';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { Register } from './register/Register';
 import { Login } from './login/Login';
 import { UpdatePassword } from './update_password/UpdatePassword';
 import { ErrorPage } from './error/ErrorPage';
 import { Index } from './page/index';
 import { UpdateInfo } from './update_info/UpdateInfo';
+import { Menu } from './page/menu/Menu';
+import { BookingHistory } from './booking_history/BookingHistory';
+import { MeetingRoomList } from './page/meeting_room_list/MeetingRoomList';
 
 const routes = [
   {
@@ -20,6 +20,24 @@ const routes = [
       {
         path: 'update_info',
         element: <UpdateInfo />,
+      },
+      {
+        path: '/',
+        element: <Menu />,
+        children: [
+          {
+            path: '/',
+            element: <MeetingRoomList />,
+          },
+          {
+            path: '/meeting_room_list',
+            element: <MeetingRoomList />,
+          },
+          {
+            path: '/booking_history',
+            element: <BookingHistory />,
+          },
+        ],
       },
     ],
   },
@@ -36,7 +54,7 @@ const routes = [
     element: <UpdatePassword />,
   },
 ];
-const router = createBrowserRouter(routes);
+export const router = createBrowserRouter(routes);
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

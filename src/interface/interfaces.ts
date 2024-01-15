@@ -118,6 +118,18 @@ export async function updateUserInfoCaptcha() {
 	return await axiosInstance.get("/user/update/captcha");
 }
 
+export interface MeetingRoomSearchResult {
+	id: number;
+	name: string;
+	capacity: number;
+	location: string;
+	equipment: string;
+	description: string;
+	isBooked: boolean;
+	createTime: Date;
+	updateTime: Date;
+}
+
 export async function searchMeetingRoomList(
 	name: string,
 	capacity: number,
@@ -186,5 +198,37 @@ export async function bookingList(
 			pageNo: pageNo,
 			pageSize: pageSize,
 		},
+	});
+}
+
+export async function unbind(id: number) {
+	return await axiosInstance.get("/booking/unbind/" + id);
+}
+
+export interface CreateBooking {
+	meetingRoomId: number;
+	rangeStartDate: Date;
+	rangeStartTime: Date;
+	rangeEndDate: Date;
+	rangeEndTime: Date;
+	note: string;
+}
+
+export async function bookingAdd(booking: CreateBooking) {
+	const rangeStartDateStr = dayjs(booking.rangeStartDate).format("YYYY-MM-DD");
+	const rangeStartTimeStr = dayjs(booking.rangeStartTime).format("HH:mm");
+	const startTime = dayjs(
+		rangeStartDateStr + " " + rangeStartTimeStr
+	).valueOf();
+
+	const rangeEndDateStr = dayjs(booking.rangeEndDate).format("YYYY-MM-DD");
+	const rangeEndTimeStr = dayjs(booking.rangeEndTime).format("HH:mm");
+	const endTime = dayjs(rangeEndDateStr + " " + rangeEndTimeStr).valueOf();
+
+	return await axiosInstance.post("/booking/add", {
+		meetingRoomId: booking.meetingRoomId,
+		startTime,
+		endTime,
+		note: booking.note,
 	});
 }

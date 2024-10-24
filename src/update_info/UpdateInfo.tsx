@@ -1,14 +1,14 @@
-import { Button, Form, Input, message } from 'antd';
-import { useForm } from 'antd/es/form/Form';
-import { useCallback, useEffect } from 'react';
-import './update_info.css';
-import { useNavigate } from 'react-router-dom';
+import { Button, Form, Input, message } from "antd";
+import { useForm } from "antd/es/form/Form";
+import { useCallback, useEffect } from "react";
+import "./update_info.css";
+import { useNavigate } from "react-router-dom";
 import {
   getUserInfo,
   updateInfo,
   updateUserInfoCaptcha,
-} from '../interface/interfaces';
-import { HeadPicUpload } from './HeadPicUpload';
+} from "../interface/interfaces";
+import { HeadPicUpload } from "./HeadPicUpload";
 
 export interface UserInfo {
   headPic: string;
@@ -33,9 +33,9 @@ export function UpdateInfo() {
       const { data } = res.data;
 
       if (res.status === 201 || res.status === 200) {
-        form.setFieldValue('headPic', data.headPic);
-        form.setFieldValue('nickName', data.nickName);
-        form.setFieldValue('email', data.email);
+        form.setFieldValue("headPic", data.headPic);
+        form.setFieldValue("nickName", data.nickName);
+        form.setFieldValue("email", data.email);
       }
     }
     query();
@@ -46,13 +46,21 @@ export function UpdateInfo() {
 
     if (res.status === 201 || res.status === 200) {
       const { message: msg, data } = res.data;
-      if (msg === 'success') {
-        message.success('用户信息更新成功');
+      if (msg === "success") {
+        message.success("用户信息更新成功");
+        const userInfo = localStorage.getItem("user_info");
+        if (userInfo) {
+          const info = JSON.parse(userInfo);
+          info.headPic = values.headPic;
+          info.nickName = values.nickName;
+
+          localStorage.setItem("user_info", JSON.stringify(info));
+        }
       } else {
         message.error(data);
       }
     } else {
-      message.error('系统繁忙，请稍后再试');
+      message.error("系统繁忙，请稍后再试");
     }
   }, []);
 
@@ -61,7 +69,7 @@ export function UpdateInfo() {
     if (res.status === 201 || res.status === 200) {
       message.success(res.data.data);
     } else {
-      message.error('系统繁忙，请稍后再试');
+      message.error("系统繁忙，请稍后再试");
     }
   }, []);
 
@@ -77,7 +85,7 @@ export function UpdateInfo() {
         <Form.Item
           label="头像"
           name="headPic"
-          rules={[{ required: true, message: '请输入头像!' }]}
+          rules={[{ required: true, message: "请输入头像!" }]}
         >
           <HeadPicUpload></HeadPicUpload>
         </Form.Item>
@@ -85,7 +93,7 @@ export function UpdateInfo() {
         <Form.Item
           label="昵称"
           name="nickName"
-          rules={[{ required: true, message: '请输入昵称!' }]}
+          rules={[{ required: true, message: "请输入昵称!" }]}
         >
           <Input />
         </Form.Item>
@@ -94,8 +102,8 @@ export function UpdateInfo() {
           label="邮箱"
           name="email"
           rules={[
-            { required: true, message: '请输入邮箱!' },
-            { type: 'email', message: '请输入合法邮箱地址!' },
+            { required: true, message: "请输入邮箱!" },
+            { type: "email", message: "请输入合法邮箱地址!" },
           ]}
         >
           <Input disabled />
@@ -105,7 +113,7 @@ export function UpdateInfo() {
           <Form.Item
             label="验证码"
             name="captcha"
-            rules={[{ required: true, message: '请输入验证码!' }]}
+            rules={[{ required: true, message: "请输入验证码!" }]}
           >
             <Input />
           </Form.Item>

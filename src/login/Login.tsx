@@ -1,8 +1,8 @@
-import { useCallback } from 'react';
-import { Button, Checkbox, Form, Input, message } from 'antd';
-import { login } from '../interface/interfaces';
-import './login.css';
-import { useNavigate } from 'react-router-dom';
+import { useCallback } from "react";
+import { Button, Checkbox, Form, Input, message } from "antd";
+import { login } from "../interface/interfaces";
+import "./login.css";
+import { useNavigate } from "react-router-dom";
 
 interface LoginUser {
   username: string;
@@ -27,19 +27,19 @@ export function Login() {
 
       if (res.status === 201 || res.status === 200) {
         const { code, message: msg, data } = res.data;
-        if (msg === 'success') {
-          message.success('登录成功');
-          localStorage.setItem('access_token', data.accessToken);
-          localStorage.setItem('refresh_token', data.refreshToken);
-          localStorage.setItem('user_info', JSON.stringify(data.userInfo));
+        if (msg === "success") {
+          message.success("登录成功");
+          localStorage.setItem("access_token", data.accessToken);
+          localStorage.setItem("refresh_token", data.refreshToken);
+          localStorage.setItem("user_info", JSON.stringify(data.userInfo));
           setTimeout(() => {
-            navigate('/');
+            navigate("/");
           }, 1000);
         } else {
           message.error(data);
         }
       } else {
-        message.error('系统繁忙，请稍后再试');
+        message.error("系统繁忙，请稍后再试");
       }
     },
     [navigate]
@@ -52,7 +52,7 @@ export function Login() {
         <Form.Item
           label="用户名"
           name="username"
-          rules={[{ required: true, message: '请输入用户名!' }]}
+          rules={[{ required: true, message: "请输入用户名!" }]}
         >
           <Input />
         </Form.Item>
@@ -60,7 +60,7 @@ export function Login() {
         <Form.Item
           label="密码"
           name="password"
-          rules={[{ required: true, message: '请输入密码!' }]}
+          rules={[{ required: true, message: "请输入密码!" }]}
         >
           <Input.Password />
         </Form.Item>
@@ -70,6 +70,17 @@ export function Login() {
             <a href="/register">创建账号</a>
             <a href="/update_password">忘记密码</a>
           </div>
+        </Form.Item>
+
+        <Form.Item {...layout2}>
+          <a
+            href="#"
+            onClick={() => {
+              window.location.href = "http://localhost:3700/user/google";
+            }}
+          >
+            Google 账号登陆
+          </a>
         </Form.Item>
 
         <Form.Item {...layout2}>

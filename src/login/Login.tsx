@@ -76,7 +76,7 @@ export function Login() {
           <a
             href="#"
             onClick={() => {
-              window.location.href = "http://localhost:3700/user/google";
+              window.location.href = "http://localhost:3005/user/google";
             }}
           >
             Google 账号登陆

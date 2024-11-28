@@ -13,7 +13,7 @@ let onChange: Function;
 
 const props: DraggerProps = {
   name: "file",
-  // action: "http://localhost:3700/user/upload",
+  // action: "http://localhost:3005/user/upload",
   action: async (file) => {
     const res = await presignedUrl(file.name);
     return res.data.data;

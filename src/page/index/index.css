@@ -18,6 +18,7 @@
 #index-container .icon {
   font-size: 40px;
   margin-top: 20px;
+  background-size: cover;
 }
 #index-container .body{
   flex: 1;

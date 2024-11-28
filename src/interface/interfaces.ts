@@ -40,7 +40,7 @@ axiosInstance.interceptors.request.use(function (config) {
 });
 
 async function refreshToken() {
-  const res = await axios.get("user/refresh", {
+  const res = await axiosInstance.get("user/refresh", {
     params: {
       refresh_token: localStorage.getItem("refresh_token"),
     },
